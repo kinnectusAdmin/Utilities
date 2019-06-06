@@ -15,7 +15,7 @@ extension UIColor {
     ///   - green: <#green description#>
     ///   - blue: <#blue description#>
     /// - Returns: <#return value description#>
-    static public func createColor(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor{
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1.0)
+    static public func createColor(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat = 1.0) -> UIColor{
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
     }
 }

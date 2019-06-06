@@ -20,7 +20,7 @@ extension UILabel{
     ///   - adjustsFont: <#adjustsFont description#>
     ///   - numberOfLines: <#numberOfLines description#>
     /// - Returns: <#return value description#>
-    static public func labelWith(font: UIFont, txtColor: UIColor, background: UIColor = UIColor.white ,alpha: CGFloat = 1.0, text: String = "", alignment: NSTextAlignment = .left, adjustsFont: Bool = false, numberOfLines: Int = 1) -> UILabel {
+    static public func labelWith(text: String = "", font: UIFont, txtColor: UIColor, background: UIColor = UIColor.white ,alpha: CGFloat = 1.0, alignment: NSTextAlignment = .left, adjustsFont: Bool = false, numberOfLines: Int = 1) -> UILabel {
         let label = UILabel()
         label.font = font
         label.textColor = txtColor

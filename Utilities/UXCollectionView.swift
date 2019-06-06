@@ -10,14 +10,12 @@ import UIKit
 import CleanModelViewIntent
 public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ItemListener {
     public typealias Model = M
-    public typealias ChildIntentType = Model.Coordinator.Link.Link.IntentType
-    public typealias ParentIntentType = Model.ParentCoordinator.Link.Link.IntentType
     private var collectionView: UICollectionView!
-    public var model: Box<Model?> = Box(nil)
     // MARK: - Input
+    public var model: Box<Model?> = Box(nil)
+    public var childInteractor: Box<Intent?> = Box(nil)
     // MARK: - Output
-    public var childInteractor: Box<ChildIntentType?> = Box(nil)
-    public var parentInteractor: Box<ParentIntentType?> = Box(nil)
+    public var parentInteractor: Box<Intent?> = Box(nil)
     public init(model: Model?, direction: UICollectionView.ScrollDirection = .vertical, frame: CGRect = .zero) {
         super.init(frame: frame)
         self.collectionView = UICollectionView.collectionView(width: 300, height: 300, direction: direction, paging: Model.isPaging)
@@ -26,7 +24,11 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.register(Model.Coordinator.ItemLink.View.self, forCellWithReuseIdentifier: Model.Coordinator.ItemLink.View.identifier)
+        self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.showsHorizontalScrollIndicator = false
+        Model.registrationItems.forEach { (cellType, identifier) in
+            self.collectionView.register(cellType, forCellWithReuseIdentifier: identifier)
+        }
         self.model.accept(model)
         self.bindModel()
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -35,10 +37,13 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         return collectionView
     }
     func bindModel() {
-        model.bind ({ [weak self] model, _ in
-            self?.collectionView.reloadData()
+        model.bind ({ [weak self] model, prevModel in
+            guard let this = self else { return }
+            guard let state = model?.viewState else { return }
+            Model.actionForViewState(state, prevModel?.viewState, this.collectionView)
         })
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,15 +59,17 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         return model.element()?.numberOfItems(section: section) ?? 0
     }
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Model.Coordinator.ItemLink.View.identifier, for: indexPath) as? Model.Coordinator.ItemLink.View {
-            model.element()?.implementCoordinator(for: cell, indexPath: indexPath, listener: self)
-            return cell as! UICollectionViewCell
-        } else {
-            return UICollectionViewCell()
+        var cell: UICollectionViewCell!
+        Model.registrationItems.forEach { (cellType, identifier) in
+            if let item  = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? ItemType {
+                model.element()?.implementCell(for: item, indexPath: indexPath, listener: self)
+                cell = item as? UICollectionViewCell
+            }
         }
+        return cell
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = model.element()?.itemSize(reference: self.frame.size) ?? self.frame.size
+        let size = model.element()?.itemSize(reference: self.frame.size, indexPath: indexPath) ?? self.frame.size
         return size
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-extension UIImageView{
+extension UIImageView {
     /// <#Description#>
     ///
     /// - Parameters:
@@ -56,8 +56,7 @@ extension UIImageView{
     /// <#Description#>
     ///
     /// - Parameter url: <#url description#>
-    public func loadImageWithURL(url: String) {
-        print(url)
+    public func loadImageWithURL(url: String, defaultImage: UIImage) {
         if let image = imageCache.object(forKey: url as AnyObject) {
             DispatchQueue.main.async {
                 self.image = image as UIImage
@@ -67,6 +66,8 @@ extension UIImageView{
             if url != nil{
                 let task = session().dataTask(with: url!, completionHandler: getImageHandler)
                 task.resume()
+            } else {
+                self.image = defaultImage
             }
         }
     }

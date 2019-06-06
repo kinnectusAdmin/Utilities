@@ -34,6 +34,7 @@
 		DA0C7E4122433C58006C26BD /* AVURLAsset_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C7E4022433C58006C26BD /* AVURLAsset_Extensions.swift */; };
 		DA0C7E4322433C80006C26BD /* Number_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C7E4222433C80006C26BD /* Number_Extensions.swift */; };
 		DA0C7E4522434483006C26BD /* UIPageControl_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C7E4422434483006C26BD /* UIPageControl_Extensions.swift */; };
+		DA31110122A3F75F002F851C /* ConstraintDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31110022A3F75F002F851C /* ConstraintDescriptions.swift */; };
 		DA975500224857A4002D1ADC /* Date_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9754FF224857A4002D1ADC /* Date_Extensions.swift */; };
 		DAA04D1D222F9C2A00DACE77 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA04D1C222F9C2A00DACE77 /* UtilitiesTests.swift */; };
 		DAA04D1F222F9C2A00DACE77 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DAA04D11222F9C2900DACE77 /* Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,6 +46,7 @@
 		DAA04D4A2230178B00DACE77 /* UXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA04D462230178B00DACE77 /* UXButton.swift */; };
 		DAA04D4B2230178B00DACE77 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA04D472230178B00DACE77 /* NetworkReachabilityManager.swift */; };
 		DAA04D4E22301C8900DACE77 /* CleanModelViewIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAA04D4D22301C8900DACE77 /* CleanModelViewIntent.framework */; };
+		DAB1B1CF22A8829500A8FD5F /* UXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB1B1CE22A8829500A8FD5F /* UXImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,7 @@
 		DA0C7E4022433C58006C26BD /* AVURLAsset_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAsset_Extensions.swift; sourceTree = "<group>"; };
 		DA0C7E4222433C80006C26BD /* Number_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number_Extensions.swift; sourceTree = "<group>"; };
 		DA0C7E4422434483006C26BD /* UIPageControl_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageControl_Extensions.swift; sourceTree = "<group>"; };
+		DA31110022A3F75F002F851C /* ConstraintDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintDescriptions.swift; sourceTree = "<group>"; };
 		DA9754FF224857A4002D1ADC /* Date_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date_Extensions.swift; sourceTree = "<group>"; };
 		DAA04D0E222F9C2900DACE77 /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA04D11222F9C2900DACE77 /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 		DAA04D462230178B00DACE77 /* UXButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXButton.swift; sourceTree = "<group>"; };
 		DAA04D472230178B00DACE77 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		DAA04D4D22301C8900DACE77 /* CleanModelViewIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CleanModelViewIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAB1B1CE22A8829500A8FD5F /* UXImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UXImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +151,8 @@
 				DA0C7E3422433BA2006C26BD /* UICollectionView_Extensions.swift */,
 				DA0C7E4422434483006C26BD /* UIPageControl_Extensions.swift */,
 				DA9754FF224857A4002D1ADC /* Date_Extensions.swift */,
+				DA31110022A3F75F002F851C /* ConstraintDescriptions.swift */,
+				DAB1B1CE22A8829500A8FD5F /* UXImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -345,8 +351,10 @@
 				DA0C7E3322433B8A006C26BD /* UILabel_Extensions.swift in Sources */,
 				DAA04D4A2230178B00DACE77 /* UXButton.swift in Sources */,
 				DA07923A2230BF61006A0E66 /* UXCollectionView.swift in Sources */,
+				DAB1B1CF22A8829500A8FD5F /* UXImage.swift in Sources */,
 				DA0C7E2F22433B58006C26BD /* UIView_Extensions.swift in Sources */,
 				DA0C7E2922433ADF006C26BD /* UIImage_Extensions.swift in Sources */,
+				DA31110122A3F75F002F851C /* ConstraintDescriptions.swift in Sources */,
 				DA0C7E3D22433C07006C26BD /* UITableView_Extensions.swift in Sources */,
 				DA079222223022CE006A0E66 /* UXTextView.swift in Sources */,
 				DA07922622302307006A0E66 /* TextManager.swift in Sources */,
