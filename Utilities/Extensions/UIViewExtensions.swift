@@ -23,6 +23,27 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
+    /// Creates a container view programmatically that can be styled sparsely
+    ///
+    /// - Parameter background: The background color with which to set the view
+    /// - Parameter radius: The Corner radius with which to set the view layer
+    /// - Returns: Returns a uiview that can immediately be constrained
+    public static func vibrantContainerView(background: UIColor = UIColor.white, radius: CGFloat = 0.0, isVisible: Bool = true, willUtilizeConstraints: Bool = true) -> UIView {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        let screen = UIView.containerView(background: background)
+        let view = UIView()
+        view.add(views: blurView, screen)
+        view.clipsToBounds = true
+        blurView.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
+        screen.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
+        view.layer.cornerRadius = radius
+        view.alpha = isVisible ? 1.0 : 0.0
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = willUtilizeConstraints ?  false : true
+        return view
+    }
     /// <#Description#>
     public func removeAllGestures() {
         for gesture in gestureRecognizers ?? [] {
@@ -78,7 +99,28 @@ extension UIView {
     ///   - view2: <#view2 description#>
     public func constrainHorizontallyBetween(view1: UIView, view2: UIView) {}
     public enum ViewPosition {
-        case left,top,right,bottom
+        case top
+        case left
+        case right
+        case bottom
+        case topsToBottom
+        case bottomsToTop
+        case centerX
+        case centerY
+        case centerAll
+        case height
+        case width
+    }
+    public enum ViewAlignment {
+        case fill
+        case leftTop
+        case rightTop
+        case leftTopRight
+        case leftBottom
+        case rightBottom
+        case leftBottomRight
+        case leftRight
+        case topBottom
     }
     /// <#Description#>
     ///
@@ -310,15 +352,6 @@ extension UIView {
     }
     /// <#Description#>
     ///
-    /// - Parameter views: <#views description#>
-    public func add(views: UIView...) {
-        for view in views{
-            addSubview(view)
-        }
-    }
-    
-    /// <#Description#>
-    ///
     /// - Parameters:
     ///   - top: <#top description#>
     ///   - left: <#left description#>
@@ -330,32 +363,6 @@ extension UIView {
         rightAnchor.constraint(equalTo: right.0.layoutMarginsGuide.rightAnchor, constant: right.1).isActive = true
         bottomAnchor.constraint(equalTo: top.0.layoutMarginsGuide.topAnchor, constant: bottom.1).isActive = true
     }
-    
-    /// <#Description#>
-    ///
-    /// - Parameters:
-    ///   - view: <#view description#>
-    ///   - top: <#top description#>
-    ///   - left: <#left description#>
-    ///   - right: <#right description#>
-    ///   - bottom: <#bottom description#>
-    public func constrainInView(view: UIView,top: CGFloat? = nil,left:CGFloat? = nil,right: CGFloat? = nil,bottom:CGFloat? = nil) {
-        
-        let margins = view.layoutMarginsGuide
-        if let topCon = top{
-            topAnchor.constraint(equalTo:margins.topAnchor, constant: topCon).isActive = true
-        }
-        if let leftCon = left{
-            leftAnchor.constraint(equalTo: view.leftAnchor, constant: leftCon).isActive = true
-        }
-        if let rightCon = right{
-            rightAnchor.constraint(equalTo: view.rightAnchor, constant: rightCon).isActive = true
-        }
-        if let bottomCon = bottom{
-            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: bottomCon).isActive = true
-        }
-    }
-    
     /// <#Description#>
     ///
     /// - Parameters:
@@ -407,10 +414,13 @@ extension UIView {
     ///   - background: <#background description#>
     ///   - alpha: <#alpha description#>
     /// - Returns: <#return value description#>
-    static public func containerView(background: UIColor = UIColor.white, alpha: CGFloat = 1.0) -> UIView {
+    static public func containerView(background: UIColor = UIColor.white, alpha: CGFloat = 1.0, radius: CGFloat = 0.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .clear) -> UIView {
         let view = UIView()
         view.backgroundColor = background
         view.alpha = alpha
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = borderColor.cgColor
+        view.layer.cornerRadius = radius
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }

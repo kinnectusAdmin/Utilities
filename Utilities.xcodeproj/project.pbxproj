@@ -47,6 +47,9 @@
 		DAA04D4B2230178B00DACE77 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA04D472230178B00DACE77 /* NetworkReachabilityManager.swift */; };
 		DAA04D4E22301C8900DACE77 /* CleanModelViewIntent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAA04D4D22301C8900DACE77 /* CleanModelViewIntent.framework */; };
 		DAB1B1CF22A8829500A8FD5F /* UXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB1B1CE22A8829500A8FD5F /* UXImage.swift */; };
+		DAB1B21122A99A2000A8FD5F /* UIViewConstraintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB1B21022A99A2000A8FD5F /* UIViewConstraintExtensions.swift */; };
+		DAC886EA22B3DA010096ECDF /* UIVisualEffectView_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC886E922B3DA010096ECDF /* UIVisualEffectView_Extensions.swift */; };
+		DAF624FA22B7FB36001C860D /* Dictionary_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF624F922B7FB36001C860D /* Dictionary_Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +106,9 @@
 		DAA04D472230178B00DACE77 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		DAA04D4D22301C8900DACE77 /* CleanModelViewIntent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CleanModelViewIntent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB1B1CE22A8829500A8FD5F /* UXImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UXImage.swift; sourceTree = "<group>"; };
+		DAB1B21022A99A2000A8FD5F /* UIViewConstraintExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewConstraintExtensions.swift; sourceTree = "<group>"; };
+		DAC886E922B3DA010096ECDF /* UIVisualEffectView_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVisualEffectView_Extensions.swift; sourceTree = "<group>"; };
+		DAF624F922B7FB36001C860D /* Dictionary_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary_Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,7 @@
 				DA0C7E2C22433B3C006C26BD /* CALayer_Extensions.swift */,
 				DA0C7E2422433A91006C26BD /* Array_Extensions.swift */,
 				DA07922D2230242D006A0E66 /* UIViewExtensions.swift */,
+				DAB1B21022A99A2000A8FD5F /* UIViewConstraintExtensions.swift */,
 				DA0C7E1E22433A51006C26BD /* String_Extensions.swift */,
 				DA0C7E2022433A64006C26BD /* UIColor_Extensions.swift */,
 				DA0C7E2222433A78006C26BD /* Optional_Extensions.swift */,
@@ -153,6 +160,8 @@
 				DA9754FF224857A4002D1ADC /* Date_Extensions.swift */,
 				DA31110022A3F75F002F851C /* ConstraintDescriptions.swift */,
 				DAB1B1CE22A8829500A8FD5F /* UXImage.swift */,
+				DAC886E922B3DA010096ECDF /* UIVisualEffectView_Extensions.swift */,
+				DAF624F922B7FB36001C860D /* Dictionary_Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +347,7 @@
 				DA0C7E3522433BA2006C26BD /* UICollectionView_Extensions.swift in Sources */,
 				DA0C7E2122433A64006C26BD /* UIColor_Extensions.swift in Sources */,
 				DAA04D492230178B00DACE77 /* UXTextField.swift in Sources */,
+				DAB1B21122A99A2000A8FD5F /* UIViewConstraintExtensions.swift in Sources */,
 				DA0C7E2722433AD0006C26BD /* Data_Extensions.swift in Sources */,
 				DA07922C223023B6006A0E66 /* ValidationType.swift in Sources */,
 				DA079224223022ED006A0E66 /* TextViewManager.swift in Sources */,
@@ -346,7 +356,9 @@
 				DA0C7E2522433A91006C26BD /* Array_Extensions.swift in Sources */,
 				DAA04D37222F9D0B00DACE77 /* GenericExtensions.swift in Sources */,
 				DA0C7E4522434483006C26BD /* UIPageControl_Extensions.swift in Sources */,
+				DAF624FA22B7FB36001C860D /* Dictionary_Extensions.swift in Sources */,
 				DAA04D4B2230178B00DACE77 /* NetworkReachabilityManager.swift in Sources */,
+				DAC886EA22B3DA010096ECDF /* UIVisualEffectView_Extensions.swift in Sources */,
 				DA0C7E2B22433B25006C26BD /* UIImageView_Extensions.swift in Sources */,
 				DA0C7E3322433B8A006C26BD /* UILabel_Extensions.swift in Sources */,
 				DAA04D4A2230178B00DACE77 /* UXButton.swift in Sources */,

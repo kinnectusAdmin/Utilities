@@ -28,6 +28,9 @@ extension UXTextField {
                       isSecure: Bool = false,
                       visible: Bool = true,
                       dismissOnEnter: Bool = true,
+                      borderColor: UIColor = .clear,
+                      borderWidth: CGFloat = 1.0,
+                      radius: CGFloat = 0.0,
                       returnType: UIReturnKeyType = .default) -> UXTextField {
         let field = UXTextField()
         field.textColor = textColor
@@ -39,6 +42,9 @@ extension UXTextField {
         field.textAlignment = alignment
         field.isSecureTextEntry = isSecure
         field.dismissOnEnter = dismissOnEnter
+        field.layer.cornerRadius = radius
+        field.layer.borderColor = borderColor.cgColor
+        field.layer.borderWidth = borderWidth
         let manager = TextManager(field: field)
         field.manager = manager
         field.delegate = manager

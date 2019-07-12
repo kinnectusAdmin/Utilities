@@ -33,9 +33,7 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         self.bindModel()
         self.translatesAutoresizingMaskIntoConstraints = false
     }
-    public func collection() -> UICollectionView? {
-        return collectionView
-    }
+    public func collection() -> UICollectionView? { return collectionView }
     func bindModel() {
         model.bind ({ [weak self] model, prevModel in
             guard let this = self else { return }
@@ -43,7 +41,6 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
             Model.actionForViewState(state, prevModel?.viewState, this.collectionView)
         })
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,17 +53,13 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         return Model.numberOfSections
     }
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.element()?.numberOfItems(section: section) ?? 0
+        let number = model.element()?.numberOfItems(section: section) ?? 0
+        return number
     }
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: UICollectionViewCell!
-        Model.registrationItems.forEach { (cellType, identifier) in
-            if let item  = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? ItemType {
-                model.element()?.implementCell(for: item, indexPath: indexPath, listener: self)
-                cell = item as? UICollectionViewCell
-            }
-        }
-        return cell
+        guard let item  = model.element()?.item(collection: collectionView, indexPath: indexPath) else { return UICollectionViewCell()}
+        model.element()?.implementCell(for: item, indexPath: indexPath, listener: self)
+        return item as! UICollectionViewCell
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = model.element()?.itemSize(reference: self.frame.size, indexPath: indexPath) ?? self.frame.size
@@ -76,11 +69,9 @@ public class UXCollectionView<M: SectionModel>: UIView, UICollectionViewDelegate
         return Model.interItemSpacing
     }
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return Model.minimumLineSpacing
     }
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-    }
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {}
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         model.element()?.willEndDragging(referenceSize: self.frame.size, withVelocity: velocity, targetContentOffset: targetContentOffset, listener: self)
     }

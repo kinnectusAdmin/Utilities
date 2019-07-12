@@ -82,4 +82,29 @@ extension UXImage {
         let image = UXImage(UIImageView.image(image: image, mode: mode, radius: radius, visible: visible, interactionOn: interactionOn, tintColor: tintColor), defaultImage: defaultImage)
         return image
     }
+    /// Return a bordered avatar UXImage
+    ///
+    /// - Parameters:
+    ///   - image: UIImage
+    ///   - mode: ContentMode
+    ///   - radius: CGFLoat
+    ///   - visible: Bool
+    ///   - interactionOn: Bool
+    ///   - tintColor: UIColor
+    ///   - defaultImage: UIImage (optional)
+    ///   - borderColors: (UIColor, UIColor)
+    ///   - size: CGFloat size of outer border view
+    /// - Returns: UXImage
+    static public func borderedAvatarImage(image: UIImage? = nil, mode: UIView.ContentMode = .scaleAspectFit, radius: CGFloat = 0.0, visible: Bool = true, interactionOn: Bool = false, tintColor: UIColor? = nil, defaultImage: UIImage? = nil, borderColors: (outer: UIColor, inner: UIColor), size: CGFloat) -> UXImage {
+        let outerBorderView = UIView.containerView(background: borderColors.outer, radius: size*0.5)
+        outerBorderView.constrainWidth_Height(width: size, height: size)
+        let innerBorderView = UIView.containerView(background: borderColors.inner, radius: size*0.5)
+        innerBorderView.constrainWidth_Height(width: size*0.90, height: size*0.90)
+        let imageView = UIImageView.image(image: image, mode: mode, radius: radius, visible: visible, interactionOn: interactionOn, tintColor: tintColor)
+        imageView.constrainWidth_Height(width: size*0.70, height:size*0.70)
+        outerBorderView.add(views: innerBorderView, imageView)
+        innerBorderView.constrainCenterToCenter(of: outerBorderView)
+        imageView.constrainCenterToCenter(of: innerBorderView)
+        return UXImage(imageView, defaultImage: defaultImage)
+    }
 }

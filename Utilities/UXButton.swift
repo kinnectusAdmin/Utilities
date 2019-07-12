@@ -12,12 +12,12 @@ public protocol AdvancedTitle {
     var uxTitle: String { get set }
     var uxTitleColor: UIColor { get set}
 }
-public class UXButton: UIButton, AdvancedTitle {
+open class UXButton: UIButton, AdvancedTitle {
     public typealias Action = () -> Void
     public var uxTitleFont: UIFont = UIFont.systemFont(ofSize: 18)
     public var uxTitle: String = ""
     public var uxTitleColor: UIColor = .gray
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         setActionTarget()
     }
@@ -40,11 +40,13 @@ public class UXButton: UIButton, AdvancedTitle {
     }
 }
 extension UXButton{
-    public static func button(font: UIFont = UIFont.systemFont(ofSize: 18), color: UIColor = UIColor.black, background: UIColor = UIColor.clear, image: UIImage? = nil,title: String = "", alpha: CGFloat = 1.0, radius: CGFloat = 0.0) -> UXButton {
+    public static func button(font: UIFont = UIFont.systemFont(ofSize: 18), color: UIColor = UIColor.black, background: UIColor = UIColor.clear, image: UIImage? = nil, title: String = "", alpha: CGFloat = 1.0, radius: CGFloat = 0.0, borderColor: UIColor = .clear, borderWidth: CGFloat = 1.0) -> UXButton {
         let button = UXButton()
         button.uxTitleFont = font
         button.uxTitle = title
         button.uxTitleColor = color
+        button.layer.borderWidth = borderWidth
+        button.layer.borderColor = borderColor.cgColor
         button.backgroundColor = background
         let atts: [String: Any] = [
             convertFromNSAttributedStringKey(NSAttributedString.Key.font): font as Any,
