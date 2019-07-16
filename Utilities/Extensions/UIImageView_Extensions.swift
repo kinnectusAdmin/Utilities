@@ -48,8 +48,6 @@ extension UIImageView {
                     }
                 }
             }
-        } else {
-            print(error?.localizedDescription ?? "Error")
         }
     }
     

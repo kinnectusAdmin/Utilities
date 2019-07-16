@@ -9,42 +9,6 @@
 import UIKit
 extension UIView {
     /// <#Description#>
-    ///
-    /// - Parameters:
-    ///   - background: <#background description#>
-    ///   - isVisible: <#isVisible description#>
-    ///   - radius: <#radius description#>
-    /// - Returns: <#return value description#>
-    static public func container(background: UIColor = UIColor.white, isVisible: Bool = true, radius: CGFloat = 0) -> UIView {
-        let view = UIView()
-        view.backgroundColor = background
-        view.alpha = isVisible ? 1.0 : 0.0
-        view.layer.cornerRadius = radius
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    /// Creates a container view programmatically that can be styled sparsely
-    ///
-    /// - Parameter background: The background color with which to set the view
-    /// - Parameter radius: The Corner radius with which to set the view layer
-    /// - Returns: Returns a uiview that can immediately be constrained
-    public static func vibrantContainerView(background: UIColor = UIColor.white, radius: CGFloat = 0.0, isVisible: Bool = true, willUtilizeConstraints: Bool = true) -> UIView {
-        let blurEffect = UIBlurEffect(style: .light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        let screen = UIView.containerView(background: background)
-        let view = UIView()
-        view.add(views: blurView, screen)
-        view.clipsToBounds = true
-        blurView.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
-        screen.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
-        view.layer.cornerRadius = radius
-        view.alpha = isVisible ? 1.0 : 0.0
-        view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = willUtilizeConstraints ?  false : true
-        return view
-    }
-    /// <#Description#>
     public func removeAllGestures() {
         for gesture in gestureRecognizers ?? [] {
             removeGestureRecognizer(gesture)
@@ -56,10 +20,39 @@ extension UIView {
     // store and access the stored property
     fileprivate struct AssociatedObjectKeys {
         static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
+        static var panGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewerPan"
     }
     
     fileprivate typealias Action = (() -> Void)?
-    
+    fileprivate typealias PanAction = ((UIPanGestureRecognizer) -> Void)?
+    // Set our computed property type to a closure
+    fileprivate var panGestureRecognizerAction: PanAction? {
+        set {
+            if let newValue = newValue {
+                // Computed properties get stored as associated objects
+                objc_setAssociatedObject(self, &AssociatedObjectKeys.panGestureRecognizer, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+            }
+        }
+        get {
+            let panGestureRecognizerActionInstance = objc_getAssociatedObject(self, &AssociatedObjectKeys.panGestureRecognizer) as? PanAction
+            return panGestureRecognizerActionInstance
+        }
+    }
+    // This is the meat of the sauce, here we create the pan gesture recognizer and
+    // store the closure the user passed to us in the associated object we declared above
+    public func addPanGestureRecognizer(action: ((UIPanGestureRecognizer) -> Void)?) {
+        self.isUserInteractionEnabled = true
+        self.panGestureRecognizerAction = action
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+        self.addGestureRecognizer(panGestureRecognizer)
+    }
+    // Every time the user taps on the UIImageView, this public function gets called,
+    // which triggers the closure we stored
+    @objc fileprivate func handlePanGesture(sender: UIPanGestureRecognizer) {
+        if let action = self.panGestureRecognizerAction {
+            action?(sender)
+        }
+    }
     // Set our computed property type to a closure
     fileprivate var tapGestureRecognizerAction: Action? {
         set {
@@ -88,8 +81,6 @@ extension UIView {
     @objc fileprivate func handleTapGesture(sender: UITapGestureRecognizer) {
         if let action = self.tapGestureRecognizerAction {
             action?()
-        } else {
-            print("no action")
         }
     }
     /// <#Description#>
@@ -414,14 +405,35 @@ extension UIView {
     ///   - background: <#background description#>
     ///   - alpha: <#alpha description#>
     /// - Returns: <#return value description#>
-    static public func containerView(background: UIColor = UIColor.white, alpha: CGFloat = 1.0, radius: CGFloat = 0.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .clear) -> UIView {
-        let view = UIView()
+    static public func containerView<V: UIView>(background: UIColor = UIColor.white, alpha: CGFloat = 1.0, radius: CGFloat = 0.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .clear) -> V {
+        let view = V()
         view.backgroundColor = background
         view.alpha = alpha
         view.layer.borderWidth = borderWidth
         view.layer.borderColor = borderColor.cgColor
         view.layer.cornerRadius = radius
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+    /// Creates a container view programmatically that can be styled sparsely
+    ///
+    /// - Parameter background: The background color with which to set the view
+    /// - Parameter radius: The Corner radius with which to set the view layer
+    /// - Returns: Returns a uiview that can immediately be constrained
+    public static func vibrantContainerView(background: UIColor = UIColor.white, radius: CGFloat = 0.0, isVisible: Bool = true, willUtilizeConstraints: Bool = true, style: UIBlurEffect.Style = UIBlurEffect.Style.light) -> UIView {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        let screen = UIView.containerView(background: background)
+        let view = UIView()
+        view.add(views: blurView, screen)
+        view.clipsToBounds = true
+        blurView.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
+        screen.constrainInView(view: view, top: 0, left: 0, right: 0, bottom: 0)
+        view.layer.cornerRadius = radius
+        view.alpha = isVisible ? 1.0 : 0.0
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = willUtilizeConstraints ?  false : true
         return view
     }
 }

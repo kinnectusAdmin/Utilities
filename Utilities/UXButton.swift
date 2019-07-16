@@ -21,11 +21,7 @@ open class UXButton: UIButton, AdvancedTitle {
         super.layoutSubviews()
         setActionTarget()
     }
-    private var action: Action? {
-        didSet {
-            print( action == nil)
-        }
-    }
+    private var action: Action?
     @objc private func initiateAction(_ sender: UXButton) {
         action?()
     }
@@ -34,9 +30,6 @@ open class UXButton: UIButton, AdvancedTitle {
     }
     public func setAction(_ uxAction: Action?) {
         self.action = uxAction
-    }
-    deinit {
-        print("hello")
     }
 }
 extension UXButton{

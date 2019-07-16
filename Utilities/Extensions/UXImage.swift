@@ -54,8 +54,6 @@ public class UXImage {
             } else {
                 self.imageView.image = defaultImage
             }
-        } else {
-            print(error?.localizedDescription ?? "Error")
         }
     }
 }

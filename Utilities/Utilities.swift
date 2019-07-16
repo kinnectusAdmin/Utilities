@@ -24,7 +24,6 @@ class Utilities {
     static func separateKeywords(words: String) -> [String.SubSequence] {
         //split the strings by the  # character
         var separateStrings = words.split(separator: "#")
-        print(separateStrings)
         //split last word by space character
         if let last2 = separateStrings.last?.split(separator: " ") {
             separateStrings.removeLast(1)
@@ -51,7 +50,6 @@ class Utilities {
             return result+filteredWord+", "+"#"
         })
         words = String(describing: words.dropLast())
-        print("string: \(words)")
         //get new set of keywords
         //remove hashtags
         let keywords1 = words.split(separator: "#")
@@ -70,9 +68,7 @@ class Utilities {
             return str
         }
         var separateStrings = separateKeywords(words: keywords)
-        print(separateStrings)
         separateStrings = removeSpaces(from: &separateStrings)
-        print(separateStrings)
         str = insertHashtags(for: &separateStrings)
         return str
     }

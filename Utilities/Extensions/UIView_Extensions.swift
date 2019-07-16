@@ -42,7 +42,7 @@ extension UIView {
         self.layer.insertSublayer(gradient, at: 0)
         return self
     }
-    public func withAlpha(_ value: CGFloat) -> UIView {
+    public func withAlpha(_ value: CGFloat) -> Self {
         self.alpha = value
         return self
     }

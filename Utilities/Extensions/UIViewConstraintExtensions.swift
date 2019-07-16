@@ -470,3 +470,38 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    /// Constrain a view top, left, right and bottom to those of another view
+    ///
+    /// - Parameters:
+    ///   - view: The super view or view to which a particular view will be constrained within
+    ///   - top: The top anchor constant from the superviews topanchor
+    ///   - left: The left anchor constant from the superviews leftAnchor
+    ///   - right: The right anchor constant from the superviews rightAnchor
+    ///   - bottom: The bottom anchor constant from the superviews bottom Anchor
+   public func constrainSubViewSafely(subView: UIView, top: CGFloat? = nil, left: CGFloat? = nil, right: CGFloat? = nil, bottom: CGFloat? = nil) {
+        if let topConstant = top {
+            if #available(iOS 11.0, *) {
+                subView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstant).isActive = true
+            } else {
+                // Fallback on earlier versions
+                subView.topAnchor.constraint(equalTo: topLayoutGuide.topAnchor, constant: topConstant).isActive = true
+            }
+        }
+        if let leftConstant = left {
+            subView.constrainLeftToLeft(of: self.view, constant: leftConstant)
+        }
+        if let rightConstant = right {
+            subView.constrainRightToRight(of: self.view, constant: rightConstant)
+        }
+        if let bottomConstant = bottom {
+            if #available(iOS 11.0, *) {
+                self.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: subView.bottomAnchor, constant: -bottomConstant).isActive = true
+            } else {
+                // Fallback on earlier versions
+                self.view.bottomAnchor.constraint(equalTo: subView.bottomAnchor, constant: bottomConstant).isActive = true
+            }
+        }
+    }
+}
+
